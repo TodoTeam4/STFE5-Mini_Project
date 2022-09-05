@@ -1,24 +1,49 @@
 import React,{useState} from 'react'
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import styled,{css} from "styled-components"
 import NewsListPage from '../NewsList/NewsListPage'
 import sort_uncheck from "../../img/sort_uncheck.png";
 import sort_check from "../../img/sort_check.png";
 
 
+
 //Clip된 기사들 처리 및 Unclip 처리
-export default function ClipPage({props}) {
-  const navigate = useNavigate();
-  const goBack = () =>{
+export default function ClipPage({props, clipdata}) {
+  const makeLink = (props) =>{
     if(props){
-      navigate('/');
+      return <StyledLink checked={props} to="/">CLIP</StyledLink>
+    }else{
+      return <StyledLink checked={props} to="/clip">CLIP</StyledLink>
     }
+
   }
+
+  const cilpEdit = (item) =>{
+
+    const {_id, web_url, headline:{main}, pub_date, byline:{original}} = item
+     
+    const newClipdata = {
+     title:main,
+     date:pub_date,
+     url:web_url,
+     byline:original,
+     id:_id
+    }
+ 
+ 
+    let localStorageArr = localStorage.getItem('clipHistory')
+     localStorageArr===null? localStorageArr=[] : localStorageArr= JSON.parse(localStorageArr); 
+     localStorageArr.push(newClipdata);
+     localStorage.setItem('clipHistory', JSON.stringify(localStorageArr))
+    
+   }
+
   return (
     <>
       <Clip>
-        <ClipBtn onClick={goBack} checked={props}><StyledLink to="/clip">CLIP</StyledLink></ClipBtn>
+        {makeLink(props)}
       </Clip>
+      {clipdata && cilpEdit(clipdata)}
     </>
   )
 }
@@ -26,12 +51,6 @@ export default function ClipPage({props}) {
 const StyledLink = styled(Link)`
   color: inherit;
   text-decoration: none;
-`;
-
-const Clip = styled.div`
-  padding: 0 0 18px;
-`;
-const ClipBtn = styled.button`
   display: inline-block;
   padding: 0 0 0 20px;
   font-size: 0.95rem;
@@ -42,6 +61,7 @@ const ClipBtn = styled.button`
   background-size: 20px;
   background-image: url(${sort_uncheck});
   background-color: transparent;
+  font-family: 'Roboto', 'NanumSquareRound', sans-serif;
   cursor: pointer;
   transition: all 0.2s linear;
   ${(props) =>
@@ -56,4 +76,8 @@ const ClipBtn = styled.button`
   &:active {
     transform: scale(0.8);
   }
+`;
+
+const Clip = styled.div`
+  padding: 0 0 18px;
 `;

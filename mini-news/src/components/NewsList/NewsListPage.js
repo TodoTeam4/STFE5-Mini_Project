@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
 import SearchPage from "../Search/SearchPage";
-import Header from "../Header/Header";
-import Styled, { css } from "styled-components";
+import Styled from "styled-components";
 import { NewsWrap } from "../../styles/WrapStyle";
 import ClipPage from "../Clip/ClipPage";
 import bookmark_before from "../../img/bookmark_before.png";
@@ -10,19 +8,14 @@ import bookmark_after from "../../img/bookmark_after.png";
 import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
 import { addId, removeId } from "../../store";
-// import API_KEY from "./Token";
-//뉴스기사 검색 받은걸 보여주는 기능 구현
+const API_KEY = process.env.REACT_APP_ARTICLES_API_KEY;
 
 export default function NewsListPage() {
   const [articles, setArticles] = useState([]);
   const [term, setTerm] = useState(); 
   const [pageNo, setPageNo] = useState(0);
   const [ref, inView] = useInView(false);
-  // const [btnActive, setBtnActive] = useState(null);
-  // const [clickNum, setClickNum] = useState(0);
-  const API_KEY = process.env.REACT_APP_ARTICLES_API_KEY;
   const value = window.localStorage.getItem('clipHistory');
-  // let ParsingClip = JSON.parse(value);
   const [clipdata,setClipdata] = useState()
 
   //redux store 가져와줌

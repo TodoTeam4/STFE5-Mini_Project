@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ClipPage from './ClipPage'
-import Styled, { css } from "styled-components";
+import Styled from "styled-components";
 import bookmark_before from "../../img/bookmark_before.png";
 import bookmark_after from "../../img/bookmark_after.png";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,7 +1,6 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { Link, } from "react-router-dom";
 import styled,{css} from "styled-components"
-import NewsListPage from '../NewsList/NewsListPage'
 import sort_uncheck from "../../img/sort_uncheck.png";
 import sort_check from "../../img/sort_check.png";
 
@@ -67,7 +66,7 @@ const StyledLink = styled(Link)`
   ${(props) =>
     props.checked &&
     css`
-      color: #e76191 !important;
+      color: #e76191 
       background-repeat: no-repeat;
       background-position: left center;
       background-size: 20px;
